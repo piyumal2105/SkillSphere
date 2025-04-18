@@ -11,6 +11,7 @@ public class Post {
     @Id
     private String id;
     private String userId;
+    private String userName;
     private String description;
     private List<String> mediaUrls;
     private Date createdAt;
@@ -22,10 +23,11 @@ public class Post {
     public Post() {
     }
 
-    public Post(String id, String userId, String description, List<String> mediaUrls, Date createdAt,
+    public Post(String id, String userId, String userName, String description, List<String> mediaUrls, Date createdAt,
             Date updatedAt, List<Like> likes, List<Comment> comments) {
         this.id = id;
         this.userId = userId;
+        this.userName = userName;
         this.description = description;
         this.mediaUrls = mediaUrls;
         this.createdAt = createdAt;
@@ -48,6 +50,14 @@ public class Post {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getDescription() {

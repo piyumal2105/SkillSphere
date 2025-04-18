@@ -29,9 +29,10 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    // Create a new post
-    @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+    // Create a post for a specific user
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<Post> createPostForUser(@PathVariable String userId, @RequestBody Post post) {
+        post.setUserId(userId); // Set the userId from the path variable
         Post createdPost = postService.createPost(post);
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }

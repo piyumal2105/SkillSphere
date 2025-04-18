@@ -94,7 +94,10 @@ export default function SkillSharingPosts() {
         mediaUrls: uploadedUrls,
       };
 
-      const response = await axios.post(`${API_BASE_URL}/posts`, postData);
+      const response = await axios.post(
+        `${API_BASE_URL}/posts/user/${user.id}`,
+        postData
+      );
       setPosts([response.data, ...posts]);
 
       setNewPost({
@@ -266,7 +269,7 @@ export default function SkillSharingPosts() {
                     className="post-user-icon"
                   />
                   <div className="post-user-info">
-                    <span className="post-username">{post.name}</span>
+                    <span className="post-username">{post.userName}</span>
                     <span className="post-time">
                       {new Date(post.createdAt).toLocaleDateString()}
                     </span>

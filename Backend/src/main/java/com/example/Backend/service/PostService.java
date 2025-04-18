@@ -22,6 +22,10 @@ public class PostService {
 
     // Create a new post
     public Post createPost(Post post) {
+        if (post.getUserId() == null || post.getUserId().isEmpty()) {
+            throw new IllegalArgumentException("User ID is required");
+        }
+        post.setUserName("Unknown User");
         post.setCreatedAt(new java.sql.Date(new Date().getTime()));
         post.setUpdatedAt(new java.sql.Date(new Date().getTime()));
         post.setLikes(new ArrayList<>());
