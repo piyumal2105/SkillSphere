@@ -27,11 +27,15 @@ public class AuthService {
         return "User registered successfully";
     }
 
-    public String login(LoginRequest request) {
+    public Optional<User> login(LoginRequest request) {
         Optional<User> user = userRepository.findByEmail(request.email);
         if (user.isPresent() && user.get().getPassword().equals(request.password)) {
-            return "Login successful";
+            User existinguser = new User();
+            existinguser.setId(user.get().getId());
+            existinguser.setName(user.get().getName());
+            existinguser.setEmail(user.get().getEmail());
+            return Optional.of(existinguser);
         }
-        return "Invalid email or password";
+        return Optional.empty();
     }
 }

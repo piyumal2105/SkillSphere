@@ -2,8 +2,12 @@ package com.example.Backend.controller;
 
 import com.example.Backend.dto.LoginRequest;
 import com.example.Backend.dto.RegisterRequest;
+import com.example.Backend.model.User;
 import com.example.Backend.service.AuthService;
+
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +25,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
-        return authService.login(request);
+    public ResponseEntity login(@RequestBody LoginRequest request) {
+        Optional<User> user = authService.login(request);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
     }
 }

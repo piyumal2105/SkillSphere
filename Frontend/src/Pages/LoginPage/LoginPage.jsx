@@ -32,22 +32,18 @@ export default function LoginPage({ onNavigateToRegister }) {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.text();
+      const result = await response.json(); // Parse JSON instead of .text()
 
-      alert(result);
+      if (response.ok) {
+        // Destructure the object and exclude password
+        const { password, ...userWithoutPassword } = result;
 
-      if (response.ok && result === "Login successful") {
-        // Save user info to localStorage (basic)
-        localStorage.setItem(
-          "loggedUser",
-          JSON.stringify({
-            userId: result.userId,
-            email: formData.email,
-            name: formData.email.split("@")[0], // temporary name
-          })
-        );
+        // Save to localStorage
+        localStorage.setItem("loggedUser", JSON.stringify(userWithoutPassword));
 
         navigate("/dashboard");
+      } else {
+        alert(result.message || "Login failed");
       }
     } catch (error) {
       alert("Login failed. Please try again.");
