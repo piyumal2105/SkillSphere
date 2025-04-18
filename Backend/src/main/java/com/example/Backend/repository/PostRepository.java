@@ -10,7 +10,6 @@ import com.example.Backend.model.Post;
 @Repository
 public interface PostRepository extends MongoRepository<Post, String> {
     List<Post> findByUserId(String userId);
-    // Page<Post> findAllByOrderByCreatedAtDesc(PageRequest pageable);
-    List<Post> findAllByOrderByCreatedAtDesc();
 
+    List<Post> findAllByOrderByCreatedAtDesc();
 }

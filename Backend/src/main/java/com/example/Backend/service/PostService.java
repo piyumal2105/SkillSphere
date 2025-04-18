@@ -33,7 +33,6 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAllByOrderByCreatedAtDesc();
     }
-    
 
     // Get post by ID
     public Post getPostById(String id) {
