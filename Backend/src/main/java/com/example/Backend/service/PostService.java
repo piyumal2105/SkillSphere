@@ -25,7 +25,10 @@ public class PostService {
         if (post.getUserId() == null || post.getUserId().isEmpty()) {
             throw new IllegalArgumentException("User ID is required");
         }
-        post.setUserName("Unknown User");
+        // post.setUserName("Unknown User");
+        if (post.getUserName() == null || post.getUserName().isEmpty()) {
+            post.setUserName("Unknown User");
+        }
         post.setCreatedAt(new java.sql.Date(new Date().getTime()));
         post.setUpdatedAt(new java.sql.Date(new Date().getTime()));
         post.setLikes(new ArrayList<>());
@@ -69,6 +72,9 @@ public class PostService {
         Post post = getPostById(postId);
         if (post.getComments() == null) {
             post.setComments(new ArrayList<>());
+        }
+        if (comment.getUserName() == null || comment.getUserName().isEmpty()) {
+            comment.setUserName("Unknown User");
         }
         comment.setId(UUID.randomUUID().toString());
         comment.setCreatedAt(new Date());

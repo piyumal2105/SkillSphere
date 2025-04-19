@@ -190,6 +190,40 @@ export default function SkillSharingPosts() {
     }
   };
 
+  const handleUpdateComment = async (postId, commentId, updatedContent) => {
+    try {
+      const updatedCommentData = {
+        content: updatedContent,
+      };
+
+      // Send request to update the comment on the server
+      const response = await axios.put(
+        `${API_BASE_URL}/posts/${postId}/comments/${commentId}`,
+        updatedCommentData
+      );
+
+      // After updating the comment, fetch the updated list of posts with comments
+      fetchPosts();
+
+      // Optionally, if you only want to update the specific post without fetching all posts again:
+      setPosts(
+        posts.map((post) =>
+          post.id === postId
+            ? {
+                ...post,
+                comments: post.comments.map((comment) =>
+                  comment.id === commentId ? response.data : comment
+                ),
+              }
+            : post
+        )
+      );
+    } catch (err) {
+      setError("Failed to update comment");
+      console.error(err);
+    }
+  };
+
   const isPostLikedByUser = (post) => {
     return post.likes && post.likes.some((like) => like.userId === user?.id);
   };
@@ -327,26 +361,44 @@ export default function SkillSharingPosts() {
                   </div>
 
                   <div className="comments-list">
-                    {post.comments?.map((comment) => (
-                      <div key={comment.id} className="comment-item">
-                        <p className="comment-author">
-                          {comment.userName}:{" "}
-                          <span className="comment-content">
-                            {comment.content}
-                          </span>
-                        </p>
-                        {comment.userId === user?.id && (
-                          <button
-                            className="delete-comment"
-                            onClick={() =>
-                              handleDeleteComment(post.id, comment.id)
-                            }
-                          >
-                            Delete
-                          </button>
-                        )}
-                      </div>
-                    ))}
+                    {post.comments &&
+                      post.comments.map((comment) => (
+                        <div key={comment.id} className="comment-item">
+                          <p className="comment-author">
+                            {comment.userName}:{" "}
+                            <span className="comment-content">
+                              {comment.content}
+                            </span>
+                          </p>
+                          {comment.userId === user?.id && (
+                            <div className="comment-actions">
+                              <button
+                                className="delete-comment"
+                                onClick={() =>
+                                  handleDeleteComment(post.id, comment.id)
+                                }
+                              >
+                                Delete
+                              </button>
+                              <button
+                                className="update-comment"
+                                onClick={() =>
+                                  handleUpdateComment(
+                                    post.id,
+                                    comment.id,
+                                    prompt(
+                                      "Update your comment",
+                                      comment.content
+                                    )
+                                  )
+                                }
+                              >
+                                Update
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>

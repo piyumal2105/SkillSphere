@@ -1,10 +1,11 @@
 package com.example.Backend.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Comment {
     private String id;
     private String userId;
+    private String userName;
     private String content;
     private Date createdAt;
     private Date updatedAt;
@@ -16,6 +17,7 @@ public class Comment {
     public Comment(String id, String userId, String userName, String content, Date createdAt, Date updatedAt) {
         this.id = id;
         this.userId = userId;
+        this.userName = userName;
         this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -35,6 +37,14 @@ public class Comment {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getContent() {

@@ -10,6 +10,7 @@ import RegisterPage from "./Pages/RegisterPage/RegisterPage.jsx";
 import LoginPage from "./Pages/LoginPage/LoginPage.jsx";
 import Dashboard from "./Pages/UserDashboard/Dashboard.jsx";
 import SkillSharingPosts from "./Pages/SkillSharing/SkillSharingPosts.jsx";
+import ProfilePage from "./Pages/UserProfile/ProfilePage.jsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/skill-sharing" element={<SkillSharingPosts />} />
+        <Route path="/profile/:id" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
